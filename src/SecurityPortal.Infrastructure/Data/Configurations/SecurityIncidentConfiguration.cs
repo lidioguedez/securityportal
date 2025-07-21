@@ -87,7 +87,7 @@ public class SecurityIncidentConfiguration : IEntityTypeConfiguration<SecurityIn
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne<Zone>()
-            .WithMany()
+            .WithMany(z => z.Incidents)
             .HasForeignKey(i => i.ZoneId)
             .OnDelete(DeleteBehavior.Restrict);
 

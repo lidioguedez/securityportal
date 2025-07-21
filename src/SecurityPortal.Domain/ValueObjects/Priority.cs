@@ -33,6 +33,29 @@ public sealed class Priority : IEquatable<Priority>
         _ => throw new ArgumentException($"Unknown priority level: {level}")
     };
 
+    public static bool TryParse(string value, out Priority priority)
+    {
+        priority = Medium;
+        
+        if (string.IsNullOrWhiteSpace(value))
+            return false;
+
+        return value.ToLowerInvariant() switch
+        {
+            "low" => SetResult(Low, out priority),
+            "medium" => SetResult(Medium, out priority),
+            "high" => SetResult(High, out priority),
+            "critical" => SetResult(Critical, out priority),
+            _ => false
+        };
+    }
+
+    private static bool SetResult(Priority result, out Priority priority)
+    {
+        priority = result;
+        return true;
+    }
+
     public bool Equals(Priority? other)
     {
         return other is not null && Level == other.Level;
